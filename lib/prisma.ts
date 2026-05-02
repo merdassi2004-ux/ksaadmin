@@ -1,17 +1,3 @@
-import { PrismaClient } from '@prisma/client';
-
-const prismaClientSingleton = () => {
-  return new PrismaClient({ log: ['error'] });
-};
-
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined;
-};
-
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
-
-export default prisma;
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// This file is intentionally left blank to overwrite the old Prisma file on GitHub.
+// Do not delete this file until you are ready to use a real database.
+export {};
