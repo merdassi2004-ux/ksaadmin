@@ -19,12 +19,12 @@ const readData = () => {
   }
 };
 
-const writeData = (data: any) => {
+const writeData = (data: unknown) => {
   const filePath = getDataFilePath();
   try {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
@@ -42,7 +42,7 @@ export async function PATCH(
     }
 
     const reservations = readData();
-    const index = reservations.findIndex((r: any) => r.id === id);
+    const index = reservations.findIndex((r: { id: string }) => r.id === id);
     
     if (index === -1) {
       return NextResponse.json({ error: 'Reservation not found' }, { status: 404 });
@@ -55,7 +55,7 @@ export async function PATCH(
     } else {
       return NextResponse.json({ error: 'Failed to update reservation' }, { status: 500 });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to update reservation' },
       { status: 500 }
@@ -71,7 +71,7 @@ export async function DELETE(
     const { id } = await params;
 
     const reservations = readData();
-    const filteredReservations = reservations.filter((r: any) => r.id !== id);
+    const filteredReservations = reservations.filter((r: { id: string }) => r.id !== id);
     
     if (filteredReservations.length === reservations.length) {
       return NextResponse.json({ error: 'Reservation not found' }, { status: 404 });
@@ -82,7 +82,7 @@ export async function DELETE(
     } else {
       return NextResponse.json({ error: 'Failed to delete reservation' }, { status: 500 });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to delete reservation' },
       { status: 500 }

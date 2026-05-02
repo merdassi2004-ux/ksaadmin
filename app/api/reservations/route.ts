@@ -19,19 +19,19 @@ const readData = () => {
   }
 };
 
-const writeData = (data: any) => {
+const writeData = (data: unknown) => {
   const filePath = getDataFilePath();
   try {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
 
 export async function GET() {
   const reservations = readData();
-  reservations.sort((a: any, b: any) => {
+  reservations.sort((a: { createdAt: string }, b: { createdAt: string }) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
   
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

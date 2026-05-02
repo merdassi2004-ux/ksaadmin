@@ -62,8 +62,9 @@ export default function WhatsAppReservation() {
         time: "",
         message: "",
       });
-    } catch (err) {
-      setError("An error occurred. Please try again or contact us directly.");
+    } catch {
+      setError("An error occurred while booking. Please try again or contact us via WhatsApp.");
+      setIsSuccess(false);
     } finally {
       setIsSubmitting(false);
     }
